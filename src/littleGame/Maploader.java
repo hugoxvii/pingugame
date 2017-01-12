@@ -24,8 +24,11 @@ public class Maploader {
 	private String chestlist="";
 	private String monsterlist="";
 	private WorldGenerator WG;
+	public boolean cave = false;
 	
 	public Maploader() {
+	
+		
 		
 		
 		mapPATH = new File ("Images/map.bmp").getAbsolutePath();
@@ -38,9 +41,14 @@ public class Maploader {
 	
 	public World loadWorld(WorldGenerator wg){
 		World world = new World(0,0);
+		boulderlist="";
+		chestlist="";
+		monsterlist="";
 		
 		WG = wg;
 		try {		
+			
+			
 		File f = new File(mapPATH);
 		BufferedImage map = ImageIO.read(f);
 		mapWidth= map.getWidth(null);
@@ -52,6 +60,7 @@ public class Maploader {
 		 
 		//Create World Object
 		world = new World(mapWidth, mapHight);
+		if (cave) world.location = "cave/cave-";
 		
 		//print Tiles
 		for(int y=0; y<world.arrayY;y++){

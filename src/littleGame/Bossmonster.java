@@ -32,6 +32,11 @@ public class Bossmonster extends Monster{
 	}
 	@Override
 	public void update (){
+		
+		if (hurttime<=0&&playerImg==hitImg){
+			playerImg= aliveImg;
+		}
+		if(hurttime>0) hurttime--;
 
 		Rectangle seeRect = new Rectangle(playerRect.x-200,playerRect.y-200,440, 440);
 		//System.out.println(p1.playerRect.x + " " + p1.playerRect.y);

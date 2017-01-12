@@ -28,6 +28,7 @@ public class World {
 	
 	//Fluff
 	public int globalxP = 0;
+	protected String location = "river/";
 	
 	//Tile images
 	protected Image TILE_EMPTY, TILE_STONE, TILE_RIVER, TILE_PIT,TILE_PITFULL, TILE_IGLU, TILE_CHEST_C, TILE_CHEST_O;
@@ -108,7 +109,7 @@ public class World {
 	
 	public Image getImage(String name){
 		
-		String PATH = new File ("Images/river/"+name+".png").getAbsolutePath();
+		String PATH = new File ("Images/"+ location +name+".png").getAbsolutePath();
 		PATH = PATH.replace("\\", "/");
 		//System.out.println(PATH);
 		Image TILE = new ImageIcon(PATH).getImage();

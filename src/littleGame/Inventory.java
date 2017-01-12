@@ -146,13 +146,43 @@ public class Inventory {
 			}
 		}
 	}
-	public void equip(){
+	public boolean isEquiped(){
+		boolean a = false;
+		if( getItem(row, collumn).equiped&&playerInv){
+			a=true;
+		}
+		return a;
+	}
+
+	public int[] equip(){
+		int[] effects = new int[2];
+		effects[0]=0;
+		effects[1]=0;
 		if( getItem(row, collumn).equipable&&playerInv){
 			getItem(row, collumn).equiped=true;
-			//System.out.println(getItem(row, collumn).equiped);
+			System.out.println(getItem(row, collumn).equiped);
+			
+			effects[0]=getItem(row, collumn).effect;
+			effects[1]=getItem(row, collumn).effectAmount;
+			
 		}
+		return effects;
 	}
 	
+	public int[] deequip(){
+		int[] effects = new int[2];
+		effects[0]=0;
+		effects[1]=0;
+		if( getItem(row, collumn).equiped&&playerInv){
+			getItem(row, collumn).equiped=false;
+			System.out.println(getItem(row, collumn).equiped);
+			
+			effects[0]=getItem(row, collumn).effect;
+			effects[1]=getItem(row, collumn).effectAmount;
+			
+		}
+		return effects;
+	}	
 	
 	public void draw(Graphics g){
 		if(playerInv)g.drawImage(InvBackPlImg, 50, 50, null); 

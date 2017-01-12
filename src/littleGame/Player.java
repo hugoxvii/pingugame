@@ -1,9 +1,11 @@
 package littleGame;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.io.File;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 
@@ -19,7 +21,7 @@ public class Player {
     private Chest[] chests;
 	private Fish fishes[];
 	private Monster m1;
-	private Monster[] monsters;
+	protected Monster[] monsters;
 	private WorldGenerator WG;
 	private Trader kng;
 	Inventory inv;
@@ -28,7 +30,7 @@ public class Player {
 	private int colHight=14;
 	public Rectangle playerRect;
 	private Image playerImg, backImg, frontImg, leftImg, rightImg;
-	private Image rightAtImg;
+	private Image rightAtImg, leftAtImg, upAtImg, downAtImg;
 	private int attacktimer=0;
 	
 	protected int x, y, xDirection, yDirection;
@@ -38,9 +40,11 @@ public class Player {
 	//Player status variables
 	public int fishCounter=0;
 	public int HP=250;
+	public int maxHP=250;
 	public int Steps=0;
 	public int xP = 0;
 	public int lVL = 1;
+	public int skillpoints = 0;
 	public int alive = 1;
 	
 	protected int spawnX =250;
@@ -59,7 +63,16 @@ public class Player {
 	protected boolean chestLooting;
 	
 	//Fightkrams
-	private Bolt bolt;
+	protected Bolt bolt;
+	protected boolean canZap = false;
+	protected int zapDmg = 0;
+	protected int meleeDmg= 10;
+	protected int crittimer = 0;
+	
+	//Atributes
+	protected int strength = 10;
+	protected int dexterity = 10;
+	protected int wisdom = 10;
 	
 	//Richtugnskrams	
 	protected int facingDir=2;
@@ -67,6 +80,9 @@ public class Player {
 	protected final int RIGHT = 1;
 	protected final int DOWN = 2;
 	protected final int LEFT = 3;
+	
+	protected Dialog dia;
+	protected Characterscreen cs;
 	
 	
 	
@@ -77,35 +93,48 @@ public class Player {
 		this.nP=NP;
 		this.sP=SP;
 		inv = new Inventory(NP, SP, true, "pingu", false);
+		cs = new Characterscreen(this);
 		
-		String playerPATH = new File ("Images/front.png").getAbsolutePath();
+		String playerPATH = new File ("Images/pingu/pingu-front.png").getAbsolutePath();
 		playerPATH = playerPATH.replace("\\", "/");
 		playerImg = new ImageIcon(playerPATH).getImage();
 		
 		//front
-		String frontPATH = new File ("Images/front.png").getAbsolutePath();
+		String frontPATH = new File ("Images/pingu/pingu-front.png").getAbsolutePath();
 		frontPATH = frontPATH.replace("\\", "/");
 		frontImg = new ImageIcon(frontPATH).getImage();
 		
 		//back
-		String backPATH = new File ("Images/back.png").getAbsolutePath();
+		String backPATH = new File ("Images/pingu/pingu-back.png").getAbsolutePath();
 		backPATH = backPATH.replace("\\", "/");
 		backImg = new ImageIcon(backPATH).getImage();
 		
 		//Left
-		String leftPATH = new File ("Images/left.png").getAbsolutePath();
+		String leftPATH = new File ("Images/pingu/pingu-left.png").getAbsolutePath();
 		leftPATH = leftPATH.replace("\\", "/");
 		leftImg = new ImageIcon(leftPATH).getImage();
 		
 		//right
-		String rightPATH = new File ("Images/right.png").getAbsolutePath(); 
+		String rightPATH = new File ("Images/pingu/pingu-right.png").getAbsolutePath(); 
 		rightPATH = rightPATH.replace("\\", "/");
 		rightImg = new ImageIcon(rightPATH).getImage();
 		
 		//attacksequenz
-		String rightAtPATH = new File ("Images/pingu-right-hit.gif").getAbsolutePath(); 
+		String rightAtPATH = new File ("Images/pingu/pingu-right-hit.gif").getAbsolutePath(); 
 		rightAtPATH = rightAtPATH.replace("\\", "/");
 		rightAtImg = new ImageIcon(rightAtPATH).getImage();
+		
+		String leftAtPATH = new File ("Images/pingu/pingu-left-hit.gif").getAbsolutePath(); 
+		leftAtPATH = leftAtPATH.replace("\\", "/");
+		leftAtImg = new ImageIcon(leftAtPATH).getImage();
+		
+		String upAtPATH = new File ("Images/pingu/pingu-back-hit.gif").getAbsolutePath(); 
+		upAtPATH = upAtPATH.replace("\\", "/");
+		upAtImg = new ImageIcon(upAtPATH).getImage();
+		
+		String downAtPATH = new File ("Images/pingu/pingu-front-hit.gif").getAbsolutePath(); 
+		downAtPATH = downAtPATH.replace("\\", "/");
+		downAtImg = new ImageIcon(downAtPATH).getImage();
 		
 		
 		
@@ -113,7 +142,7 @@ public class Player {
 		
 			
 	}
-	public void inform(World w, Monster[] mons, Object[]gboulders, Chest[] gChests, Fish[] gFish, Bolt b, WorldGenerator WorldG, Trader KNG, Player p){
+	public void inform(World w, Monster[] mons, Object[]gboulders, Chest[] gChests, Fish[] gFish, Bolt b, WorldGenerator WorldG, Trader KNG, Player p, Dialog d){
 		this.monsters = mons;
 		this.world = w;
 		this.boulders = gboulders;
@@ -123,6 +152,7 @@ public class Player {
 		this.WG = WorldG;
 		this.kng = KNG;
 		this.bolt = b;
+		this.dia = d;
 		
 		
 	}
@@ -141,22 +171,49 @@ public class Player {
 	protected void setXDirection (int d){
 		xDirection = d;
 	}
+	
 	protected void setYDirection (int d){
 		yDirection = d;
 	}
+
 	public void setCurrentDirectionX (int d){
 		currentDirectionX = d;
 	}
+
 	public void setCurrentDirectionY (int d){
 		currentDirectionY = d;
 	}
 	
+	public void equip (){
+		if (inv.isEquiped()) deequip();
+		else{
+		int[] effects =inv.equip();
+		
+		if(effects[0]==1){
+			canZap =true;
+			zapDmg=effects[1];
+		}
+		}
+	}
+	
+	public void deequip (){
+		int[] effects =inv.deequip();
+		
+		if(effects[0]==1){
+			canZap = false;
+			zapDmg = 0;
+		}
+	}
+
 	public void hurt(int dmg){
 		HP=HP-dmg;
 	}
 
 	public void levelup(){
 		lVL++;
+		maxHP += 50;
+		HP= maxHP;
+		skillpoints=skillpoints +10;
 	}
 	
 	public void checkLvl(){
@@ -166,7 +223,7 @@ public class Player {
 		 * Lvl 4 = 400xp
 		 */
 		
-		while(xP>=(50* Math.pow(2,lVL))){
+		while(xP>=(250* Math.pow(2,lVL))){
 			levelup();
 		}
 	}
@@ -177,14 +234,25 @@ public class Player {
 	}
 	
 	public void update (){
-		if(attacktimer>0)attacktimer--;
+		//make the critprint disappear
+		if (crittimer>0) crittimer--;
 		
+		//gain XP
 		if(alive==1) gainXP(world.globalxP);
 		world.globalxP=0;
 		
+		//Attribute stuff
+		meleeDmg = 10 + strength/10;
+		
+		// Combatstuff
+		if(attacktimer>0)attacktimer--;
+		
+		
+		//Dead?
 		if(HP<=0){
 			respawn();
 		}				
+		//move
 		move();
 	}
 
@@ -206,7 +274,7 @@ public class Player {
 		WG.moveChests(chests,(-1*a[0]),(-1*a[1]));
 		WG.moveBoulders(boulders,(-1*a[0]),(-1*a[1]));
 		//Reset HP
-		HP=250;
+		HP=maxHP;
 		
 		if(fishCounter>0){
 			fishCounter--;
@@ -222,7 +290,10 @@ public class Player {
 	//System.out.println(attacktimer);
 
 		if(attacktimer>0){
-			playerImg = rightAtImg;
+			if (facingDir==RIGHT) playerImg = rightAtImg;
+			if (facingDir==LEFT) playerImg = leftAtImg;
+			if (facingDir==UP) playerImg = upAtImg;
+			if (facingDir==DOWN) playerImg = downAtImg;
 		}
 		else{
 		if(yDirection>0){
@@ -346,25 +417,26 @@ public class Player {
 		
 		for(int i=0; i<monsters.length; i++)
 		if(actionRect.intersects(monsters[i].playerRect)){
-			m1.hurt(10);
+			//calc crit
+			Random rand = new Random();
+			int randX=rand.nextInt(100);
+			int dmg;
+			if(randX<=dexterity){
+				dmg=meleeDmg + strength;
+				crittimer =25;
+			}
+			else dmg= meleeDmg;
+			
+			monsters[i].hurt(dmg);
 		}
 		
 	}
+	
 	public void fire(){
-		//System.out.println("try");
-		Item a = new Item_Wand();
-		int[] loc = inv.searchItem(a);
-		if(loc[0]!=-1){
-			//System.out.println("have" );
-
-		Item b = inv.getItem(loc[0], loc[1]);
-		//System.out.println(b.equiped );
-		if(b.equiped){
-			System.out.println("equiped");
-
-		bolt.fire(playerRect.x, playerRect.y,facingDir);		
+		if(canZap){
+		bolt.fire(playerRect.x, playerRect.y,facingDir, wisdom/5 + zapDmg);		
 		}
-		}
+		
 	}
 	
 	private void checkForCollision(){
@@ -585,6 +657,9 @@ public class Player {
 	
 	public void draw(Graphics g){
 		g.drawImage(playerImg, playerRect.x-((20-colWidth)/2), playerRect.y-((20-colHight)/2), null); 
+		g.setColor(Color.red);
+		if (crittimer>0) g.drawString("Crit!",playerRect.x +5 ,playerRect.y-5 );
+		g.setColor(Color.white);
 	}
 	
 	public void act(){
@@ -605,7 +680,7 @@ public class Player {
 			}
 		}
 		else if (canTrade&&!tradeStatus&&!inventoryMode&&!chestLooting){
-			initiateTrade();
+			dia.openDialog();
 		}
 		else if (canLoot&&!tradeStatus&&!inventoryMode&&!looting&&!chestLooting){
 			startLooting();
@@ -656,75 +731,32 @@ public class Player {
 		inventoryMode = false;
 		nP.cancleOverwrite();
 	}
+	
 	public void startLooting(){
 		looting = true;
 	}
+	
 	public void startChestLooting(){
 		chestLooting = true;
 	}
+	
 	public void stopLooting(){
 		looting = false;
 		nP.cancleOverwrite();
 	}
+	
 	public void stopChestLooting(){
 		chestLooting = false;
 		nP.cancleOverwrite();
 	}
+	
 	public boolean getlootStatus(){
 		return looting;
 	}
+	
 	public boolean getChestlootStatus(){
 		return chestLooting;
 	}
 
-	private class Weapon{
-		
-		public static final int UNARMED = 0;
-		public static final int SWORD = 1;
-		public static final int SNOWBALL = 2;
-		
-		public int CURRENT_WEAPON;
-		
-		public Weapon(int w){
-			switch(w){
-				default:
-					System.out.println("No Weapon selected!");
-					break;
-				case UNARMED:
-					CURRENT_WEAPON = UNARMED;
-					break;
-				case SWORD:
-					CURRENT_WEAPON = SWORD;
-					break;
-				case SNOWBALL:
-					CURRENT_WEAPON = SNOWBALL;
-					break;					
-			}
-		}
-		
-		public void selectWeapon (int w){
-			switch(w){
-			default:
-				System.out.println("No Weapon selected!");
-				break;
-			case UNARMED:
-				CURRENT_WEAPON = UNARMED;
-				break;
-			case SWORD:
-				CURRENT_WEAPON = SWORD;
-				break;
-			case SNOWBALL:
-				CURRENT_WEAPON = SNOWBALL;
-				break;					
-			}
-		}
-		
-		public boolean isEquipped(int w){
-			if(w == CURRENT_WEAPON){
-				return true;
-			}
-			else
-				return false;
-		}
-	}
+
 }

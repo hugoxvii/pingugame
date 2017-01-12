@@ -88,22 +88,23 @@ public class WorldGenerator{
 	public void readBoulders(String codeword, World world){
 		
 		if(codeword.length()<6){
+			System.out.println("overwriting boulders");
 			Boulders = new Object[1];
 			Boulders[0] = new Object(world,-100,-100,0,fakeBoulders);
-			//System.out.println("Notfallboulder erstellt.");
+			
 		}else{
 			
 		Boulders = new Object[codeword.length()/6];
-		//System.out.println("Normaler geplant." + codeword.length());
+		
 		int a = codeword.length();
 		for(int i=1; i<=a/6;i++){
-			//System.out.println("Normaler geplant." + codeword);
+			
 			int x= Character.getNumericValue(codeword.charAt(i*6-6))*100+Character.getNumericValue(codeword.charAt(i*6-5))*10+Character.getNumericValue(codeword.charAt(i*6-4));
 			int y= Character.getNumericValue(codeword.charAt(i*6-3))*100+Character.getNumericValue(codeword.charAt(i*6-2))*10+Character.getNumericValue(codeword.charAt(i*6-1));
 			x=x*20;
 			y=y*20;
 			Boulders[i-1] = new Object(world,x,y,i-1,fakeBoulders);
-			//System.out.println("test" + Boulders[0].objectRect.x);
+			
 		}
 		}
 	}
@@ -120,36 +121,36 @@ public class WorldGenerator{
 		
 		int a = codeword.length();
 		for(int i=1; i<=a/6;i++){
-			System.out.println("Normale chest geplant." + codeword);
+			
 			int x= Character.getNumericValue(codeword.charAt(i*6-6))*100+Character.getNumericValue(codeword.charAt(i*6-5))*10+Character.getNumericValue(codeword.charAt(i*6-4));
 			int y= Character.getNumericValue(codeword.charAt(i*6-3))*100+Character.getNumericValue(codeword.charAt(i*6-2))*10+Character.getNumericValue(codeword.charAt(i*6-1));
 			x=x*20;
 			y=y*20;
 			Chests[i-1] = new Chest(np,sp,x,y);
-			System.out.println("test" + Chests[0].NRect.x);
+			
 		}
 		}
 	}
 	
 	public void readMonsters(String codeword, World world){
-		System.out.println("READ Monsters.");
+		
 		if(codeword.length()<6){
 			Monsters = new Monster[1];
 			Monsters[0] = new Monster(-100, -100, np, sp, 0);
-			System.out.println("NotfallMonster erstellt.");
+		
 		}else{
 			
 		Monsters = new Monster[codeword.length()/6];
-		System.out.println("Normale Monster geplant." + codeword.length());
+		
 		int a = codeword.length();
 		for(int i=1; i<=a/6;i++){
-			System.out.println("Normale Monster geplant." + codeword);
+			
 			int x= Character.getNumericValue(codeword.charAt(i*6-6))*100+Character.getNumericValue(codeword.charAt(i*6-5))*10+Character.getNumericValue(codeword.charAt(i*6-4));
 			int y= Character.getNumericValue(codeword.charAt(i*6-3))*100+Character.getNumericValue(codeword.charAt(i*6-2))*10+Character.getNumericValue(codeword.charAt(i*6-1));
 			x=x*20;
 			y=y*20;
 			Monsters[i-1] = new Monster(x,y,np,sp,i-1);
-			System.out.println("test" + Monsters[0].playerRect.x);
+			
 		}
 		}
 	}
@@ -189,9 +190,8 @@ public class WorldGenerator{
 	}
 	public void drawMonsters(Monster[] mons, Graphics g){
 		for(int i=0;i<mons.length;i++){
-			if(mons[i].alive){
-				mons[i].draw(g);
-			}
+			mons[i].draw(g);
+			
 		}
 	}
 	public void updateMonsters(Monster[] mons){

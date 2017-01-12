@@ -27,13 +27,17 @@ public class WorldCoordinator {
 	//might be implimented diffrently
 	protected Bolt bolt;
 	
+	//temporary
+	protected Dialog dia;
 	
-	public WorldCoordinator(Player p, NotificationPanel nP, StatusPanel sP ){
+	
+	public WorldCoordinator(Player p, NotificationPanel nP, StatusPanel sP, Dialog d ){
 		
 		//gets all the existing WorldElements - just the player, and access to the other Panels
 		this.player = p;
 		this.np = nP;
 		this.sp = sP;
+		this.dia = d;
 		
 		// will call for everything necessary to create the new World
 		WG = new WorldGenerator(sp,np);
@@ -59,7 +63,7 @@ public class WorldCoordinator {
 		
 		//inform all of each other
 		
-		player.inform(world, monsters, boulders, chests, fish, bolt, WG, kng, player);
+		player.inform(world, monsters, boulders, chests, fish, bolt, WG, kng, player, dia);
 		WG.informMonsters(world, monsters, boulders, chests, fish, bolt, kng, player);
 		WG.informBoulders(boulders);
 		
@@ -80,9 +84,30 @@ public class WorldCoordinator {
 		
 	}
 	public void inform(){
-		player.inform(world, monsters, boulders, chests, fish, bolt, WG, kng, player);
+		player.inform(world, monsters, boulders, chests, fish, bolt, WG, kng, player, dia);
 		WG.informMonsters(world, monsters, boulders, chests, fish, bolt, kng, player);
 		WG.informBoulders(boulders);
+	}
+	
+	public void loadNewWorld(){
+		ML.mapPATH = ML.map2PATH;
+		world = ML.loadWorld(WG);
+		
+		boulders = WG.getBoulders();
+		chests = WG.getChests();
+		monsters = WG.getMonsters();
+		
+		fish = new Fish[20];
+		fish = WG.genFishes(20,world);
+		kng = new Trader(np,sp,-100,-100);
+		bolt = new Bolt(world);
+		
+		//inform all of each other
+		
+		player.inform(world, monsters, boulders, chests, fish, bolt, WG, kng, player, dia);
+		WG.informMonsters(world, monsters, boulders, chests, fish, bolt, kng, player);
+		WG.informBoulders(boulders);
+		
 	}
 	
 	public void draw (Graphics g){

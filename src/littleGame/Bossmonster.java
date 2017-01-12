@@ -12,12 +12,17 @@ public class Bossmonster extends Monster{
 		super(sX, sY, NP, SP, i);
 		
 
-		String playerPATH = new File ("Images/monster2.png").getAbsolutePath();
+		String playerPATH = new File ("Images/monster/monster2.png").getAbsolutePath();
 		playerPATH = playerPATH.replace("\\", "/");
 		playerImg = new ImageIcon(playerPATH).getImage();
-		String deadPATH = new File ("Images/monster2_dead.png").getAbsolutePath();
+		aliveImg = new ImageIcon(playerPATH).getImage();
+		String deadPATH = new File ("Images/monster/monster2-dead.png").getAbsolutePath();
 		deadPATH = deadPATH.replace("\\", "/");
 		deadImg = new ImageIcon(deadPATH).getImage();
+		String hitPATH = new File ("Images/monster/monster2_hitshadow.png").getAbsolutePath();
+		hitPATH = hitPATH.replace("\\", "/");
+		hitImg = new ImageIcon(hitPATH).getImage();
+				
 		playerRect = new Rectangle (SpawnX, SpawnY, 40, 40);
 		Inv = new Inventory(NP, SP, false, "Megabubble",true);
 		HP=500;
@@ -25,9 +30,15 @@ public class Bossmonster extends Monster{
 		dMG=5;
 		width=40;
 		height=40;
+		xp = 350;
 	}
 	@Override
 	public void update (){
+		
+		if (hurttime<=0&&playerImg==hitImg){
+			playerImg= aliveImg;
+		}
+		if(hurttime>0) hurttime--;
 
 		Rectangle seeRect = new Rectangle(playerRect.x-200,playerRect.y-200,440, 440);
 		//System.out.println(p1.playerRect.x + " " + p1.playerRect.y);

@@ -11,14 +11,19 @@ public class Item {
 	public int type;
 	public String discriptionText;
 	public boolean stackable;
-	public boolean equiped = false;
-	public boolean equipable = false;
+
 	//stackable Items
 	public int amount = 1;
 	
+	//equipable items
+	public int effect = 0;
+	public int effectAmount = 0;
+	public boolean equiped = false;
+	public boolean equipable = false;
 	//Picture
 		private String ItmPATH;
 		protected Image ItmImg;
+		
 		
 	
 	public Item(int t, String text, boolean stack, String PATH){

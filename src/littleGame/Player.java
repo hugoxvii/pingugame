@@ -1,9 +1,11 @@
 package littleGame;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.io.File;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 
@@ -38,9 +40,11 @@ public class Player {
 	//Player status variables
 	public int fishCounter=0;
 	public int HP=250;
+	public int maxHP=250;
 	public int Steps=0;
 	public int xP = 0;
 	public int lVL = 1;
+	public int skillpoints = 0;
 	public int alive = 1;
 	
 	protected int spawnX =250;
@@ -59,9 +63,16 @@ public class Player {
 	protected boolean chestLooting;
 	
 	//Fightkrams
-	private Bolt bolt;
-	private boolean canZap = false;
-	private int zapDmg = 0;
+	protected Bolt bolt;
+	protected boolean canZap = false;
+	protected int zapDmg = 0;
+	protected int meleeDmg= 10;
+	protected int crittimer = 0;
+	
+	//Atributes
+	protected int strength = 10;
+	protected int dexterity = 10;
+	protected int wisdom = 10;
 	
 	//Richtugnskrams	
 	protected int facingDir=2;
@@ -71,6 +82,7 @@ public class Player {
 	protected final int LEFT = 3;
 	
 	protected Dialog dia;
+	protected Characterscreen cs;
 	
 	
 	
@@ -81,6 +93,7 @@ public class Player {
 		this.nP=NP;
 		this.sP=SP;
 		inv = new Inventory(NP, SP, true, "pingu", false);
+		cs = new Characterscreen(this);
 		
 		String playerPATH = new File ("Images/pingu/pingu-front.png").getAbsolutePath();
 		playerPATH = playerPATH.replace("\\", "/");
@@ -198,6 +211,9 @@ public class Player {
 
 	public void levelup(){
 		lVL++;
+		maxHP += 50;
+		HP= maxHP;
+		skillpoints=skillpoints +10;
 	}
 	
 	public void checkLvl(){
@@ -218,14 +234,25 @@ public class Player {
 	}
 	
 	public void update (){
-		if(attacktimer>0)attacktimer--;
+		//make the critprint disappear
+		if (crittimer>0) crittimer--;
 		
+		//gain XP
 		if(alive==1) gainXP(world.globalxP);
 		world.globalxP=0;
 		
+		//Attribute stuff
+		meleeDmg = 10 + strength/10;
+		
+		// Combatstuff
+		if(attacktimer>0)attacktimer--;
+		
+		
+		//Dead?
 		if(HP<=0){
 			respawn();
 		}				
+		//move
 		move();
 	}
 
@@ -247,7 +274,7 @@ public class Player {
 		WG.moveChests(chests,(-1*a[0]),(-1*a[1]));
 		WG.moveBoulders(boulders,(-1*a[0]),(-1*a[1]));
 		//Reset HP
-		HP=250;
+		HP=maxHP;
 		
 		if(fishCounter>0){
 			fishCounter--;
@@ -390,14 +417,24 @@ public class Player {
 		
 		for(int i=0; i<monsters.length; i++)
 		if(actionRect.intersects(monsters[i].playerRect)){
-			monsters[i].hurt(10);
+			//calc crit
+			Random rand = new Random();
+			int randX=rand.nextInt(100);
+			int dmg;
+			if(randX<=dexterity){
+				dmg=meleeDmg + strength;
+				crittimer =25;
+			}
+			else dmg= meleeDmg;
+			
+			monsters[i].hurt(dmg);
 		}
 		
 	}
 	
 	public void fire(){
 		if(canZap){
-		bolt.fire(playerRect.x, playerRect.y,facingDir, zapDmg);		
+		bolt.fire(playerRect.x, playerRect.y,facingDir, wisdom/5 + zapDmg);		
 		}
 		
 	}
@@ -620,6 +657,9 @@ public class Player {
 	
 	public void draw(Graphics g){
 		g.drawImage(playerImg, playerRect.x-((20-colWidth)/2), playerRect.y-((20-colHight)/2), null); 
+		g.setColor(Color.red);
+		if (crittimer>0) g.drawString("Crit!",playerRect.x +5 ,playerRect.y-5 );
+		g.setColor(Color.white);
 	}
 	
 	public void act(){

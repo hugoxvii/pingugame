@@ -69,41 +69,21 @@ public class GamePanel extends JPanel implements Runnable{
 	protected WorldGenerator WG = new WorldGenerator(SP,NP);
 	protected WorldCoordinator WC;
 	protected Scenario tutorial;
+	protected Menu menu;
+	protected Dialog dia;
 	
-	public GamePanel() throws IOException{
+	public GamePanel(Display d) throws IOException{
 		
 		//trying WC version
 		player=new Player(NP, SP);
-		WC = new WorldCoordinator(player, NP, SP);
+		dia = new Dialog(player);
+		WC = new WorldCoordinator(player, NP, SP, dia);
 		title = new Title();
 		tutorial = new Scenario(player, title,NP, SP, 1,this, WC);
-		
-		
-		/*Maploader ML = new Maploader();
-		world = ML.loadWorld(WG);
-		//boulders = new Object[20];
-		//boulders = WG.genBoulders(20, world);
-		boulders = WG.getBoulders();
-		chests = WG.getChests();
-		WG.informBoulders(boulders);
-		fishes = new Fish[20];
-		fishes = WG.genFishes(20,world);
-		kng = new Trader(NP,SP,860,260);
-		bolt = new Bolt(world);
-		
-		testItem = new Item_Key();
-		kng.Inv.addItem(testItem);*/
-		
-		//inv = new Inventory(NP,SP, true, "Pingu",false);
-		
-		//player = new Player(world, boulders, fishes, kng, chests, bolt, WG, inv, NP, SP);
-		//monster1 = new Monster(1020, 260, world, boulders, fishes, chests, bolt, player, kng, NP, SP);
-		//monster1.Inv.addItem(testItem);
+		menu = new Menu(d);
 		
 		
 		
-		//player.monsterInfo(monster1);
-
 		
 		setPreferredSize(gameDim);
 		setBackground(Color.WHITE);
@@ -124,6 +104,7 @@ public class GamePanel extends JPanel implements Runnable{
 					if(player.getTradeStatus()) player.currentTrader.Inv.navigate(2);
 					if(player.getlootStatus()) player.currentLootTarget.Inv.navigate(2);
 					if(player.getChestlootStatus()) player.currentLootChestTarget.Inv.navigate(2);
+					if(menu.mode) menu.navigateSound(1);
 				}
 				if(e.getKeyCode() == KeyEvent.VK_LEFT){
 					player.setCurrentDirectionX(LEFT);
@@ -136,6 +117,7 @@ public class GamePanel extends JPanel implements Runnable{
 					if(player.getTradeStatus()) player.currentTrader.Inv.navigate(-2);
 					if(player.getlootStatus()) player.currentLootTarget.Inv.navigate(-2);
 					if(player.getChestlootStatus()) player.currentLootChestTarget.Inv.navigate(-2);
+					if(menu.mode) menu.navigateSound(-1);
 				}
 				if(e.getKeyCode() == KeyEvent.VK_DOWN){
 					player.setCurrentDirectionY(DOWN);
@@ -148,6 +130,11 @@ public class GamePanel extends JPanel implements Runnable{
 					if(player.getTradeStatus()) player.currentTrader.Inv.navigate(1);
 					if(player.getlootStatus()) player.currentLootTarget.Inv.navigate(1);
 					if(player.getChestlootStatus()) player.currentLootChestTarget.Inv.navigate(1);
+					if(menu.mode) menu.navigate(1);
+					if(dia.mode) {
+						
+						dia.navigat();
+					}
 				}
 				if(e.getKeyCode() == KeyEvent.VK_UP){
 					player.setCurrentDirectionY(UP);
@@ -160,6 +147,8 @@ public class GamePanel extends JPanel implements Runnable{
 					if(player.getTradeStatus()) player.currentTrader.Inv.navigate(-1);
 					if(player.getlootStatus()) player.currentLootTarget.Inv.navigate(-1);
 					if(player.getChestlootStatus()) player.currentLootChestTarget.Inv.navigate(-1);
+					if(menu.mode) menu.navigate(-1);
+					if(dia.mode) dia.navigat();
 				}
 				if(e.getKeyChar() == 'r'){
 					player.respawn();
@@ -167,13 +156,25 @@ public class GamePanel extends JPanel implements Runnable{
 				if(e.getKeyCode() == KeyEvent.VK_SHIFT){
 					SHIFT_Pressed = true;
 				}
+				if(e.getKeyCode() == KeyEvent.VK_ENTER){
+					if(menu.mode) menu.enter();
+					if(dia.mode) dia.enter();
+				}
+				
 				if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+					
+					if(!player.getInvStatus()&&!player.getTradeStatus()&&!player.getlootStatus()&&!player.getChestlootStatus()&&!titleMode){
+						if(!menu.mode) menu.openMenu();
+						else menu.back();
+					}
+					
 					player.stopTrade();
 					player.closeInventory();
 					player.stopLooting();
 					player.stopChestLooting();
 					titleMode=false;
 					NP.cancleOverwrite();
+					dia.closeDialog();
 				}
 			
 				if(e.getKeyCode() == KeyEvent.VK_SPACE){
@@ -277,8 +278,9 @@ public class GamePanel extends JPanel implements Runnable{
 					player.fire();
 					delay=120;
 				}
-				if(e.getKeyChar() == 'e'&&player.getInvStatus()){
-					player.inv.equip();
+				if(e.getKeyChar() == 'e'&&player.getInvStatus()&&delay<=0){
+					player.equip();
+					delay = 70;
 				}
 				
 			}
@@ -291,8 +293,8 @@ public class GamePanel extends JPanel implements Runnable{
 			game.start();
 			running = true;
 			
-			music = new Thread(new Sound());
-			music.start();
+			
+			
 			
 			
 		}
@@ -376,7 +378,7 @@ public class GamePanel extends JPanel implements Runnable{
 			
 			//trading = player.getTradeStatus();
 			//update Game state
-			if(!player.getInvStatus()&&!player.getTradeStatus()&&!player.getlootStatus()&&!player.getChestlootStatus()){
+			if(!player.getInvStatus()&&!player.getTradeStatus()&&!player.getlootStatus()&&!player.getChestlootStatus()&&!menu.mode&&!dia.mode){
 				WC.update();
 			}
 			else{
@@ -421,6 +423,8 @@ public class GamePanel extends JPanel implements Runnable{
 		if(player.getlootStatus()) player.currentLootTarget.Inv.draw(g);
 		if(player.getChestlootStatus()) player.currentLootChestTarget.Inv.draw(g);
 		if(titleMode) title.draw(g);
+		if(menu.mode) menu.draw(g);
+		if (dia.mode) dia.draw(g);
 		
 		
 	}

@@ -43,7 +43,7 @@ public class World {
 		this.arrayX = width;
 		this.arrayY = hight;
 		
-		String emptyPATH = new File ("Images/empty.png").getAbsolutePath();
+		String emptyPATH = new File ("Images/"+ location + "empty.png").getAbsolutePath();
 		String stonePATH = new File ("Images/stone.png").getAbsolutePath();
 		String riverPATH = new File ("Images/river.png").getAbsolutePath();
 		String pitPATH = new File ("Images/pit.png").getAbsolutePath();
@@ -105,6 +105,56 @@ public class World {
 		
 		//Spawn New Objects - atm in GP
 		//boulder = new Object(World(this), 100, 100);
+	}
+	
+	public void reloadImages(){
+		String emptyPATH = new File ("Images/"+ location + "empty.png").getAbsolutePath();
+		String stonePATH = new File ("Images/stone.png").getAbsolutePath();
+		String riverPATH = new File ("Images/river.png").getAbsolutePath();
+		String pitPATH = new File ("Images/pit.png").getAbsolutePath();
+		String pitfullPATH = new File ("Images/pitfull.png").getAbsolutePath();
+		String doorVPATH = new File ("Images/walls/door-vertical-closed.png").getAbsolutePath();
+		String doorHPATH = new File ("Images/walls/door-horizontal-closed.png").getAbsolutePath();
+		String doorHOPATH = new File ("Images/walls/door-horizontal-open.png").getAbsolutePath();
+		String doorVOPATH = new File ("Images/walls/door-vertical-open.png").getAbsolutePath();
+		String wallSecPATH = new File ("Images/walls/wall-cross.png").getAbsolutePath();
+		String wallHPATH = new File ("Images/walls/wall-horizontal.png").getAbsolutePath();
+		String wallVPATH = new File ("Images/walls/wall-vertical.png").getAbsolutePath();
+		String igluPATH = new File ("Images/iglu.png").getAbsolutePath();
+		String ChestCPATH = new File ("Images/iglu.png").getAbsolutePath();
+		String ChestOPATH = new File ("Images/iglu.png").getAbsolutePath();
+		
+		emptyPATH = emptyPATH.replace("\\", "/");
+		stonePATH = stonePATH.replace("\\", "/");
+		riverPATH = riverPATH.replace("\\", "/");
+		pitPATH = pitPATH.replace("\\", "/");
+		pitfullPATH = pitfullPATH.replace("\\", "/");
+		wallVPATH = wallVPATH.replace("\\", "/");
+		wallHPATH = wallHPATH.replace("\\", "/");
+		wallSecPATH = wallSecPATH.replace("\\", "/");
+		doorHPATH = doorHPATH.replace("\\", "/");
+		doorVPATH = doorVPATH.replace("\\", "/");
+		doorHOPATH = doorHOPATH.replace("\\", "/");
+		doorVOPATH = doorVOPATH.replace("\\", "/");
+		igluPATH = igluPATH.replace("\\", "/");
+		ChestCPATH = ChestCPATH.replace("\\", "/");
+		ChestOPATH = ChestOPATH.replace("\\", "/");
+		
+		TILE_EMPTY = new ImageIcon(emptyPATH).getImage();
+		TILE_STONE = new ImageIcon(stonePATH).getImage();
+		TILE_RIVER = new ImageIcon(riverPATH).getImage();
+		TILE_PIT = new ImageIcon(pitPATH).getImage();
+		TILE_PITFULL = new ImageIcon(pitfullPATH).getImage();
+		TILE_DOOR_H = new ImageIcon(doorHPATH).getImage();
+		TILE_DOOR_V = new ImageIcon(doorVPATH).getImage();
+		TILE_DOOR_H_O = new ImageIcon(doorHOPATH).getImage();
+		TILE_DOOR_V_O = new ImageIcon(doorVOPATH).getImage();
+		TILE_WALL_SEC = new ImageIcon(wallSecPATH).getImage();
+		TILE_WALL_H = new ImageIcon(wallHPATH).getImage();
+		TILE_WALL_V = new ImageIcon(wallVPATH).getImage();
+		TILE_IGLU = new ImageIcon(igluPATH).getImage();
+		TILE_CHEST_O = new ImageIcon(ChestOPATH).getImage();
+		TILE_CHEST_C = new ImageIcon(ChestCPATH).getImage();
 	}
 	
 	public Image getImage(String name){

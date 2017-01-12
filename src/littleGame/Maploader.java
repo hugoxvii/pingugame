@@ -61,6 +61,7 @@ public class Maploader {
 		//Create World Object
 		world = new World(mapWidth, mapHight);
 		if (cave) world.location = "cave/cave-";
+		world.reloadImages();
 		
 		//print Tiles
 		for(int y=0; y<world.arrayY;y++){

@@ -79,19 +79,19 @@ public class Scenario {
 			title.setTutStage(4);
 			gp.titleMode = true;
 		}// the second fortress
-		if (player.playerRect.x-player.world.xFromHome>1660&&player.playerRect.y-player.world.yFromHome>560&&act==4){
+		if (player.playerRect.x-player.world.xFromHome<1220&&player.playerRect.y-player.world.yFromHome>1380&&act==4){
 			act=5;
 			title.setTutStage(5);
 			gp.titleMode = true;
 		}
 		//finishing the Megabubble
-		if (player.playerRect.x-player.world.xFromHome>760&&player.playerRect.x-player.world.xFromHome<840&&player.playerRect.y-player.world.yFromHome>1380&&player.playerRect.y-player.world.yFromHome<1460&&act==5){
+		if (!player.monsters[player.monsters.length-1].alive&&act==5){
 			act=6;
 			title.setTutStage(6);
 			gp.titleMode = true;
 		}
 		//into the pit
-				if (player.playerRect.x-player.world.xFromHome>400&&player.playerRect.x-player.world.xFromHome<420&&player.playerRect.y-player.world.yFromHome>1440&&player.playerRect.y-player.world.yFromHome<1500/*&&act==6*/){
+				if (player.playerRect.x-player.world.xFromHome>400&&player.playerRect.x-player.world.xFromHome<420&&player.playerRect.y-player.world.yFromHome>1440&&player.playerRect.y-player.world.yFromHome<1500&&act==6){
 					act=7;
 					wc.ML.cave = true;
 					wc.loadNewWorld();

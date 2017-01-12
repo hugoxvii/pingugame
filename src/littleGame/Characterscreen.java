@@ -147,7 +147,7 @@ public void draw(Graphics g){
 		g.setFont(new Font(g.getFont().getFontName(), Font.PLAIN, g.getFont().getSize() -3));
 		
 		if(tempStr>player.strength) g.setColor(Color.green);
-		g.drawString("Melee Dmg:" + 10 + tempStr/10, 200, 160);
+		g.drawString("Melee Dmg:" + (10 + tempStr/10), 200, 160);
 		g.setColor(Color.white);
 		if(tempDex>player.dexterity) g.setColor(Color.green);
 		g.drawString("Melee Critchance:" + tempDex + "%", 200, 180);

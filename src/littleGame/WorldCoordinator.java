@@ -99,7 +99,7 @@ public class WorldCoordinator {
 		
 		fish = new Fish[20];
 		fish = WG.genFishes(20,world);
-		kng = new Trader(np,sp,860,260);
+		kng = new Trader(np,sp,-100,-100);
 		bolt = new Bolt(world);
 		
 		//inform all of each other

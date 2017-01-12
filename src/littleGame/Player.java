@@ -71,7 +71,7 @@ public class Player {
 	
 	//Atributes
 	protected int strength = 10;
-	protected int dexterity = 100;
+	protected int dexterity = 10;
 	protected int wisdom = 10;
 	
 	//Richtugnskrams	

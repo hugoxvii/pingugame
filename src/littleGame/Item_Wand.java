@@ -26,6 +26,8 @@ public class Item_Wand extends Item {
 		super(type, discriptionText, stackable, ItmPATH);
 		//equipable items
 		equipable =true;
+		effect = 1;
+		effectAmount = 20;
 		
 		
 		

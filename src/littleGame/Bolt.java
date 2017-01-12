@@ -13,6 +13,7 @@ public class Bolt {
 	private int defY=-100;
 	private int dur=0;
 	private int dir;
+	public int damage = 0;
 	protected Rectangle sRect;
 	protected boolean active = false;
 	protected Image SHImg;
@@ -30,12 +31,13 @@ public class Bolt {
 		SVImg = new ImageIcon(SHPATH).getImage();
 		SImg = SHImg;
 	}
-	public void fire(int x, int y, int d){
+	public void fire(int x, int y, int d, int dmg){
 		active = true;
 		sRect.x = x;
 		sRect.y = y;
 		dur=120;
 		dir=d;
+		damage = dmg;
 		if(dir==0) {
 			sRect.y+=-5;
 			SImg=SHImg;

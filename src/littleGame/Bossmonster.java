@@ -12,12 +12,16 @@ public class Bossmonster extends Monster{
 		super(sX, sY, NP, SP, i);
 		
 
-		String playerPATH = new File ("Images/monster2.png").getAbsolutePath();
+		String playerPATH = new File ("Images/monster/monster2.png").getAbsolutePath();
 		playerPATH = playerPATH.replace("\\", "/");
 		playerImg = new ImageIcon(playerPATH).getImage();
-		String deadPATH = new File ("Images/monster2_dead.png").getAbsolutePath();
+		String deadPATH = new File ("Images/monster/monster2-dead.png").getAbsolutePath();
 		deadPATH = deadPATH.replace("\\", "/");
 		deadImg = new ImageIcon(deadPATH).getImage();
+		String hitPATH = new File ("Images/monster/monster2_hitshadow.png").getAbsolutePath();
+		hitPATH = hitPATH.replace("\\", "/");
+		hitImg = new ImageIcon(hitPATH).getImage();
+				
 		playerRect = new Rectangle (SpawnX, SpawnY, 40, 40);
 		Inv = new Inventory(NP, SP, false, "Megabubble",true);
 		HP=500;

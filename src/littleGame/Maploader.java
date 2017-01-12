@@ -15,6 +15,7 @@ public class Maploader {
 	private World world;
 	private BufferedImage map;
 	String mapPATH;
+	String map2PATH;
 	
 	//Values Dependend on Map
 	private int mapWidth;
@@ -29,6 +30,8 @@ public class Maploader {
 		
 		mapPATH = new File ("Images/map.bmp").getAbsolutePath();
 		mapPATH = mapPATH.replace("\\", "/");
+		map2PATH = new File ("Images/map2.bmp").getAbsolutePath();
+		map2PATH = map2PATH.replace("\\", "/");
 
 		
 	}

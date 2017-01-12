@@ -25,8 +25,7 @@ public class Monster {
 	protected Inventory Inv;
 	
 	protected Rectangle playerRect;
-	protected Image playerImg;
-	protected Image deadImg;
+	protected Image playerImg, deadImg ,hitImg, aliveImg;
 	protected int counter = 0;
 
 	
@@ -43,6 +42,8 @@ public class Monster {
 	protected int height=20;
 	private WorldGenerator WG;
 	
+	private int hurttime = 0;
+	
 	
 	public Monster(int sX, int sY,/*, World world, Object[] gBoulders, Fish[] gFishes,Chest[] gChests, Bolt b, Player player1, Trader KNG, */NotificationPanel NP, StatusPanel SP, int i){
 		//this.world = world;
@@ -56,12 +57,18 @@ public class Monster {
 		//this.kng = KNG;
 		//this.chests = gChests;
 		//this.bolt = b;
-		String playerPATH = new File ("Images/monster.png").getAbsolutePath();
+		String playerPATH = new File ("Images/monster/monster.png").getAbsolutePath();
 		playerPATH = playerPATH.replace("\\", "/");
+		aliveImg = new ImageIcon(playerPATH).getImage();
 		playerImg = new ImageIcon(playerPATH).getImage();
-		String deadPATH = new File ("Images/monster-back.png").getAbsolutePath();
+		String deadPATH = new File ("Images/monster/monster-back.png").getAbsolutePath();
 		deadPATH = deadPATH.replace("\\", "/");
 		deadImg = new ImageIcon(deadPATH).getImage();
+		String hitPATH = new File ("Images/monster/monster_hitshadow.png").getAbsolutePath();
+		hitPATH = hitPATH.replace("\\", "/");
+		hitImg = new ImageIcon(hitPATH).getImage();
+		
+		
 		playerRect = new Rectangle (SpawnX, SpawnY, 20, 20);
 		Inv = new Inventory(NP, SP, false, "Oktobubble",true);
 	}
@@ -98,6 +105,8 @@ public void inform(World w, Monster[] mons, Object[]gboulders, Chest[] gChests, 
 	
 	public void hurt(int dmg){
 		HP -= dmg;
+		playerImg = hitImg;
+		hurttime = 5;
 		if(HP<=0&&alive) kill();
 	}
 	public void kill(){
@@ -114,6 +123,11 @@ public void inform(World w, Monster[] mons, Object[]gboulders, Chest[] gChests, 
 	
 	
 	public void update (){
+		
+		if (hurttime<=0&&playerImg==hitImg){
+			playerImg= aliveImg;
+		}
+		if(hurttime>0) hurttime--;
 
 		if (counter<=0){
 			Random rand = new Random();
@@ -231,7 +245,7 @@ public void inform(World w, Monster[] mons, Object[]gboulders, Chest[] gChests, 
 					}
 				}
 				if(bolt.sRect.intersects(playerRect)){
-					hurt(50);
+					hurt(bolt.damage);
 					bolt.vanish();
 				}
 			}

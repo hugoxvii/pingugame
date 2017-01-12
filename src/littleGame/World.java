@@ -111,8 +111,8 @@ public class World {
 		String emptyPATH = new File ("Images/"+ location + "empty.png").getAbsolutePath();
 		String stonePATH = new File ("Images/stone.png").getAbsolutePath();
 		String riverPATH = new File ("Images/river.png").getAbsolutePath();
-		String pitPATH = new File ("Images/pit.png").getAbsolutePath();
-		String pitfullPATH = new File ("Images/pitfull.png").getAbsolutePath();
+		String pitPATH = new File ("Images/"+ location + "pit.png").getAbsolutePath();
+		String pitfullPATH = new File ("Images/"+ location + "pit-full.png").getAbsolutePath();
 		String doorVPATH = new File ("Images/walls/door-vertical-closed.png").getAbsolutePath();
 		String doorHPATH = new File ("Images/walls/door-horizontal-closed.png").getAbsolutePath();
 		String doorHOPATH = new File ("Images/walls/door-horizontal-open.png").getAbsolutePath();

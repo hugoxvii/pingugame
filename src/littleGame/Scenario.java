@@ -91,8 +91,9 @@ public class Scenario {
 			gp.titleMode = true;
 		}
 		//into the pit
-				if (player.playerRect.x-player.world.xFromHome>400&&player.playerRect.x-player.world.xFromHome<420&&player.playerRect.y-player.world.yFromHome>1440&&player.playerRect.y-player.world.yFromHome<1500&&act==6){
+				if (player.playerRect.x-player.world.xFromHome>400&&player.playerRect.x-player.world.xFromHome<420&&player.playerRect.y-player.world.yFromHome>1440&&player.playerRect.y-player.world.yFromHome<1500/*&&act==6*/){
 					act=7;
+					wc.ML.cave = true;
 					wc.loadNewWorld();
 					title.setTutStage(7);
 					gp.titleMode = true;

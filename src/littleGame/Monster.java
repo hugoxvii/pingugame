@@ -42,7 +42,7 @@ public class Monster {
 	protected int height=20;
 	private WorldGenerator WG;
 	
-	private int hurttime = 0;
+	protected int hurttime = 0;
 	
 	
 	public Monster(int sX, int sY,/*, World world, Object[] gBoulders, Fish[] gFishes,Chest[] gChests, Bolt b, Player player1, Trader KNG, */NotificationPanel NP, StatusPanel SP, int i){
@@ -105,7 +105,7 @@ public void inform(World w, Monster[] mons, Object[]gboulders, Chest[] gChests, 
 	
 	public void hurt(int dmg){
 		HP -= dmg;
-		playerImg = hitImg;
+		if(alive) playerImg = hitImg;
 		hurttime = 5;
 		if(HP<=0&&alive) kill();
 	}

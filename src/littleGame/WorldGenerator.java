@@ -88,6 +88,7 @@ public class WorldGenerator{
 	public void readBoulders(String codeword, World world){
 		
 		if(codeword.length()<6){
+			System.out.println("overwriting boulders");
 			Boulders = new Object[1];
 			Boulders[0] = new Object(world,-100,-100,0,fakeBoulders);
 			

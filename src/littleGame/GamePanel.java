@@ -105,6 +105,7 @@ public class GamePanel extends JPanel implements Runnable{
 					if(player.getlootStatus()) player.currentLootTarget.Inv.navigate(2);
 					if(player.getChestlootStatus()) player.currentLootChestTarget.Inv.navigate(2);
 					if(menu.mode) menu.navigateSound(1);
+					if(player.cs.mode) player.cs.increase(1);
 				}
 				if(e.getKeyCode() == KeyEvent.VK_LEFT){
 					player.setCurrentDirectionX(LEFT);
@@ -118,6 +119,7 @@ public class GamePanel extends JPanel implements Runnable{
 					if(player.getlootStatus()) player.currentLootTarget.Inv.navigate(-2);
 					if(player.getChestlootStatus()) player.currentLootChestTarget.Inv.navigate(-2);
 					if(menu.mode) menu.navigateSound(-1);
+					if(player.cs.mode) player.cs.increase(-1);
 				}
 				if(e.getKeyCode() == KeyEvent.VK_DOWN){
 					player.setCurrentDirectionY(DOWN);
@@ -131,10 +133,8 @@ public class GamePanel extends JPanel implements Runnable{
 					if(player.getlootStatus()) player.currentLootTarget.Inv.navigate(1);
 					if(player.getChestlootStatus()) player.currentLootChestTarget.Inv.navigate(1);
 					if(menu.mode) menu.navigate(1);
-					if(dia.mode) {
-						
-						dia.navigat();
-					}
+					if(dia.mode) dia.navigat();
+					if(player.cs.mode) player.cs.navigate(1);
 				}
 				if(e.getKeyCode() == KeyEvent.VK_UP){
 					player.setCurrentDirectionY(UP);
@@ -149,6 +149,7 @@ public class GamePanel extends JPanel implements Runnable{
 					if(player.getChestlootStatus()) player.currentLootChestTarget.Inv.navigate(-1);
 					if(menu.mode) menu.navigate(-1);
 					if(dia.mode) dia.navigat();
+					if(player.cs.mode) player.cs.navigate(-1);
 				}
 				if(e.getKeyChar() == 'r'){
 					player.respawn();
@@ -159,11 +160,12 @@ public class GamePanel extends JPanel implements Runnable{
 				if(e.getKeyCode() == KeyEvent.VK_ENTER){
 					if(menu.mode) menu.enter();
 					if(dia.mode) dia.enter();
+					if(player.cs.mode) player.cs.enter();
 				}
 				
 				if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
 					
-					if(!player.getInvStatus()&&!player.getTradeStatus()&&!player.getlootStatus()&&!player.getChestlootStatus()&&!titleMode){
+					if(!player.getInvStatus()&&!player.getTradeStatus()&&!player.getlootStatus()&&!player.getChestlootStatus()&&!titleMode&&!player.cs.mode){
 						if(!menu.mode) menu.openMenu();
 						else menu.back();
 					}
@@ -175,6 +177,7 @@ public class GamePanel extends JPanel implements Runnable{
 					titleMode=false;
 					NP.cancleOverwrite();
 					dia.closeDialog();
+					player.cs.closeMenu();
 				}
 			
 				if(e.getKeyCode() == KeyEvent.VK_SPACE){
@@ -282,6 +285,9 @@ public class GamePanel extends JPanel implements Runnable{
 					player.equip();
 					delay = 70;
 				}
+				if(e.getKeyChar() == 'c'&&!player.cs.mode){
+					player.cs.openMenu();
+				}
 				
 			}
 		});
@@ -378,7 +384,7 @@ public class GamePanel extends JPanel implements Runnable{
 			
 			//trading = player.getTradeStatus();
 			//update Game state
-			if(!player.getInvStatus()&&!player.getTradeStatus()&&!player.getlootStatus()&&!player.getChestlootStatus()&&!menu.mode&&!dia.mode){
+			if(!player.getInvStatus()&&!player.getTradeStatus()&&!player.getlootStatus()&&!player.getChestlootStatus()&&!menu.mode&&!dia.mode&&!player.cs.mode){
 				WC.update();
 			}
 			else{
@@ -424,7 +430,8 @@ public class GamePanel extends JPanel implements Runnable{
 		if(player.getChestlootStatus()) player.currentLootChestTarget.Inv.draw(g);
 		if(titleMode) title.draw(g);
 		if(menu.mode) menu.draw(g);
-		if (dia.mode) dia.draw(g);
+		if(dia.mode) dia.draw(g);
+		if(player.cs.mode) player.cs.draw(g);
 		
 		
 	}

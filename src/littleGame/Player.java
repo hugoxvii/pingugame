@@ -21,7 +21,7 @@ public class Player {
     private Chest[] chests;
 	private Fish fishes[];
 	private Monster m1;
-	private Monster[] monsters;
+	protected Monster[] monsters;
 	private WorldGenerator WG;
 	private Trader kng;
 	Inventory inv;
@@ -223,7 +223,7 @@ public class Player {
 		 * Lvl 4 = 400xp
 		 */
 		
-		while(xP>=(50* Math.pow(2,lVL))){
+		while(xP>=(250* Math.pow(2,lVL))){
 			levelup();
 		}
 	}

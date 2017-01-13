@@ -78,6 +78,7 @@ public class Title {
 		
 	}
 	public void setTutStage(int act){
+		System.out.println(act);
 		switch (act){
 			default:
 				break;
@@ -144,8 +145,8 @@ public class Title {
 				Lines[9] = "";
 				Lines[10] = " ";
 				Lines[11] = "";
-				Lines[12] = "";
-				Lines[13] = "";
+				Lines[12] = "[If you have trouble possitioning the boulders: pressing SHIFT while ";
+				Lines[13] = "moving let's you move much slower]";
 				Lines[14] = "";
 				Lines[15] = "";
 				Lines[16] = "";
@@ -154,7 +155,7 @@ public class Title {
 				
 				break;
 			case 4:
-				actT=3;
+				actT=4;
 				it=205;
 				Lines[0] = "You opend it! Neat.";
 				Lines[1] = "";
@@ -177,7 +178,7 @@ public class Title {
 				
 				break;
 			case 5:
-				actT=3;
+				actT=5;
 				it=205;
 				Lines[0] = "Ahh be carefull now...";
 				Lines[1] = "";
@@ -200,11 +201,11 @@ public class Title {
 				
 				break;
 			case 6:
-				actT=3;
+				actT=6;
 				it=205;
 				Lines[0] = "Yay! You did it again!";
 				Lines[1] = "";
-				Lines[2] = "Now lets see what we can find in the Fort!";
+				Lines[2] = "Now lets see what we can find inside the Fort!";
 				Lines[4] = "";
 				Lines[5] = "";
 				Lines[6] = "";
@@ -214,6 +215,29 @@ public class Title {
 				Lines[10] = " ";
 				Lines[11] = "";
 				Lines[12] = "";
+				Lines[13] = "";
+				Lines[14] = "";
+				Lines[15] = "";
+				Lines[16] = "";
+				Lines[17] = "";
+				Lines[18] = "Press t anytime to hide or display this text. ";
+				
+				break;
+			case 7:
+				actT=6;
+				it=205;
+				Lines[0] = "                   Congratulations!";
+				Lines[1] = "";
+				Lines[2] = "     You found you way to the mysterious dungeons.";
+				Lines[4] = "  This demoversion of 'yet another Pingugame' ends here.";
+				Lines[5] = "";
+				Lines[6] = "Please let us know what you did or didn't like about the game,";
+				Lines[7] = "so we can incooperate your input into the full game or further ";
+				Lines[8] = "projects.";
+				Lines[9] = "";
+				Lines[10] = "     I hope you enjoyed the journey this far. ";
+				Lines[11] = "";
+				Lines[12] = "                                           ~ Radom, Jan 2017";
 				Lines[13] = "";
 				Lines[14] = "";
 				Lines[15] = "";

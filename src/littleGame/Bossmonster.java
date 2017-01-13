@@ -15,6 +15,7 @@ public class Bossmonster extends Monster{
 		String playerPATH = new File ("Images/monster/monster2.png").getAbsolutePath();
 		playerPATH = playerPATH.replace("\\", "/");
 		playerImg = new ImageIcon(playerPATH).getImage();
+		aliveImg = new ImageIcon(playerPATH).getImage();
 		String deadPATH = new File ("Images/monster/monster2-dead.png").getAbsolutePath();
 		deadPATH = deadPATH.replace("\\", "/");
 		deadImg = new ImageIcon(deadPATH).getImage();
@@ -29,6 +30,7 @@ public class Bossmonster extends Monster{
 		dMG=5;
 		width=40;
 		height=40;
+		xp = 350;
 	}
 	@Override
 	public void update (){

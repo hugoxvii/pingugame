@@ -41,6 +41,7 @@ public class Monster {
 	protected int width=20;
 	protected int height=20;
 	private WorldGenerator WG;
+	protected int xp = 50;
 	
 	protected int hurttime = 0;
 	
@@ -112,7 +113,7 @@ public void inform(World w, Monster[] mons, Object[]gboulders, Chest[] gChests, 
 	public void kill(){
 		playerImg = deadImg;
 		alive = false;
-		p1.gainXP(100);
+		p1.gainXP(xp);
 	}
 	public void heal(int heal){
 		if(HP<maxHP){

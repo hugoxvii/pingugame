@@ -78,7 +78,7 @@ public class Bossmonster extends Monster{
 	public void draw(Graphics g){
 		g.drawImage(playerImg, playerRect.x, playerRect.y, null); 
 		
-		if(inReach){
+		if(inReach&&alive){
 			g.setColor(Color.white);
 			g.fillRect(100, 360, 300, 15);
 			g.setColor(Color.red);

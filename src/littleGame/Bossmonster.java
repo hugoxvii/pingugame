@@ -1,5 +1,7 @@
 package littleGame;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.io.File;
 import java.util.Random;
@@ -7,6 +9,8 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 
 public class Bossmonster extends Monster{
+	
+	private boolean inReach=false;
 
 	public Bossmonster(int sX, int sY, NotificationPanel NP, StatusPanel SP, int i) {
 		super(sX, sY, NP, SP, i);
@@ -50,6 +54,7 @@ public class Bossmonster extends Monster{
 			if(p1.playerRect.y < playerRect.y) setCurrentDirectionY(-1);
 			if(p1.playerRect.y > playerRect.y) setCurrentDirectionY(1);
 			counter=2;
+			inReach=true;
 		}
 	else if (counter<=0){
 			Random rand = new Random();
@@ -58,6 +63,7 @@ public class Bossmonster extends Monster{
 			setCurrentDirectionX(randX);
 			setCurrentDirectionY(randY);
 			counter=100;
+			inReach = false;
 		}
 			
 		counter--;	
@@ -65,6 +71,21 @@ public class Bossmonster extends Monster{
 			move();
 		}
 		
+		
+	}
+	
+	@Override
+	public void draw(Graphics g){
+		g.drawImage(playerImg, playerRect.x, playerRect.y, null); 
+		
+		if(inReach){
+			g.setColor(Color.white);
+			g.fillRect(100, 360, 300, 15);
+			g.setColor(Color.red);
+			g.fillRect(100, 360, (300*HP/maxHP), 15);
+			g.setColor(Color.black);
+			g.drawRect(100, 360, 300, 15);
+		}
 		
 	}
 }

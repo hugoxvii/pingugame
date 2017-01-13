@@ -32,7 +32,7 @@ public class Scenario {
 			//place Items in inventories
 			Item a = new Item_Wand();
 			WC.chests[0].Inv.addItem(a);
-			WC.kng.Inv.addItem(a);
+			//WC.kng.Inv.addItem(a);
 			
 			//Spawn a bossmonster that is not painted in the map
 			Monster[]monsters=WC.WG.getMonsters();

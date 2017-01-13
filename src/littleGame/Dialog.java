@@ -24,7 +24,7 @@ public class Dialog {
 		String menuPATH = new File ("Images/inventory.png").getAbsolutePath();
 		menuPATH = menuPATH.replace("\\", "/");
 		dialogImg = new ImageIcon(menuPATH).getImage();
-		String avakngPATH = new File ("Images/kng_ava.png").getAbsolutePath();
+		String avakngPATH = new File ("Images/kng_ava2.png").getAbsolutePath();
 		avakngPATH = avakngPATH.replace("\\", "/");
 		kngImg = new ImageIcon(avakngPATH).getImage();
 		String avapingPATH = new File ("Images/Pingu_ava.png").getAbsolutePath();
@@ -192,8 +192,9 @@ public class Dialog {
 				closeDialog();
 			}
 			if(decisions[3]==1){
-				push("Well there are rumors about a Tressure.");
-				push("It is supposed to be burried under in the southern Fort.");
+				push("Well there are rumors about a Treasure.");
+				push("It is supposed to be burried under in the ");
+				push("southern Fort.");
 				options[0]= "loot Fort, got it. Let's trade.";
 				options[1]= "Sounds like I should check it out!";
 				stage++;
@@ -207,8 +208,8 @@ public class Dialog {
 				closeDialog();
 			}
 			if(decisions[4]==1){
-				push("Well you allways were a foolish adventurer at heart.");
-				push("Take care, my little Friend.");
+				push("Well you allways were a foolish adventurer ");
+				push("at heart. Take care, my little Friend.");
 				options[0]= "Wait I need some supplies!";
 				options[1]= "Thanks, Ill be back with the tressure.";
 				stage++;

@@ -201,6 +201,8 @@ public class World {
 	public void draw(Graphics g){
 		for(int y=0; y<arrayY;y++){
 			for(int x=0; x<arrayX;x++){
+				//evtl schneller`?
+				//if((tiles[x][y].x<600&&tiles[x][y].x>-50)&&(tiles[x][y].y<500&&tiles[x][y].y>-50))g.drawImage(tileImg[x][y], tiles[x][y].x, tiles[x][y].y, null);
 				g.drawImage(tileImg[x][y], tiles[x][y].x, tiles[x][y].y, null);
 			}
 			

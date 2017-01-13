@@ -24,7 +24,7 @@ public class Dialog {
 		String menuPATH = new File ("Images/inventory.png").getAbsolutePath();
 		menuPATH = menuPATH.replace("\\", "/");
 		dialogImg = new ImageIcon(menuPATH).getImage();
-		String avakngPATH = new File ("Images/kng_ava2.png").getAbsolutePath();
+		String avakngPATH = new File ("Images/kng_ava.png").getAbsolutePath();
 		avakngPATH = avakngPATH.replace("\\", "/");
 		kngImg = new ImageIcon(avakngPATH).getImage();
 		String avapingPATH = new File ("Images/Pingu_ava.png").getAbsolutePath();

@@ -45,6 +45,8 @@ public class Monster {
 	
 	protected int hurttime = 0;
 	
+	protected boolean boss = false;
+	
 	
 	public Monster(int sX, int sY,/*, World world, Object[] gBoulders, Fish[] gFishes,Chest[] gChests, Bolt b, Player player1, Trader KNG, */NotificationPanel NP, StatusPanel SP, int i){
 		//this.world = world;
@@ -256,5 +258,6 @@ public void inform(World w, Monster[] mons, Object[]gboulders, Chest[] gChests, 
 	
 	public void draw(Graphics g){
 		g.drawImage(playerImg, playerRect.x, playerRect.y, null); 
+		
 	}
 }

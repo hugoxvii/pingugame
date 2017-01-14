@@ -40,6 +40,9 @@ public class Menu {
 	public void navigate(int dir){
 		selected = selected + dir;
 		
+	}
+	
+	public void navigateSound(int dir){
 		if (submenu==2){
 			if (dir>0)volume++;
 			if (dir<0)volume--;
@@ -48,19 +51,10 @@ public class Menu {
 			changeVolume();
 		}
 	}
-	public void navigateSound(int dir){
-		
-			if (dir>0)volume++;
-			if (dir<0)volume--;
-			if(volume >=2) volume =1;
-			if(volume <=-4) volume =-3;
-			changeVolume();
-		
-	}
 	
 	public void changeVolume(){
 		int a=0;
-		if(volume==-3)a=-25;
+		if(volume==-3)a=-75;
 		if(volume==-2)a=-10;
 		if(volume==-1)a=-5;
 		if(volume==0)a=-0;
@@ -104,18 +98,42 @@ public class Menu {
 			g.setFont(new Font(g.getFont().getFontName(), Font.PLAIN, g.getFont().getSize() -5));
 
 			
-			g.drawString("w      up", 100, 150);
-			g.drawString("a      left", 100, 170);
-			g.drawString("s      down", 100, 190);
-			g.drawString("d      right", 100, 210);
-			g.drawString("SPACE  attack", 100, 230);
-			g.drawString("z      zap", 100, 250);
-			g.drawString("k      kick", 100, 270);
-			g.drawString("f      interact", 100, 290);
+			g.drawString("UP", 100, 150);
+			g.drawString("up", 150, 150);
+
+			g.drawString("LEFT", 100, 170);
+			g.drawString("left", 150, 170);
 			
-			g.drawString("e	      equip/disequip", 200, 150);
-			g.drawString("SHIFT   move slowly", 200, 170);
-			g.drawString("ESC     leave menu", 200, 190);
+			g.drawString("DOWN", 100, 190);
+			g.drawString("down", 150, 190);
+			
+			g.drawString("RIGHT", 100, 210);
+			g.drawString("right", 150, 210);
+			
+			g.drawString("SPACE", 100, 230);
+			g.drawString("attack", 150, 230);
+			
+			g.drawString("z", 100, 250);
+			g.drawString("zap", 150, 250);
+			
+			g.drawString("k", 100, 270);
+			g.drawString("kick", 150, 270);
+			
+			g.drawString("f", 100, 290);
+			g.drawString("interact", 150, 290);
+
+			g.drawString("c", 100, 310);
+			g.drawString("character screen", 150, 310);
+			
+			g.drawString("e", 250, 150);
+			g.drawString("equip & disequip", 300, 150);
+
+			g.drawString("SHIFT", 250, 170);
+			g.drawString("move slowly", 300, 170);
+
+			g.drawString("ESC", 250, 190);
+			g.drawString("leave menu", 300, 190);
+
 			g.drawString("		", 200, 210);
 			g.drawString("	", 200, 230);
 			g.drawString("", 200, 250);

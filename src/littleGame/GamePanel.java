@@ -468,7 +468,7 @@ public class GamePanel extends JPanel implements Runnable{
 	}
 
 	private void log(String s){
-		//System.out.println(s);
+		System.out.println(s);
 	}
 }
 

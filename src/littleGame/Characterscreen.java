@@ -46,7 +46,7 @@ public class Characterscreen {
 		mode = true;
 		tempStr = player.strength;
 		tempDex = player.dexterity;
-		tempWisdom = player.strength;
+		tempWisdom = player.wisdom;
 		tempSP = player.skillpoints;
 	
 	}
@@ -56,7 +56,7 @@ public class Characterscreen {
 		mode = false;
 		tempStr = player.strength;
 		tempDex = player.dexterity;
-		tempWisdom = player.strength;
+		tempWisdom = player.wisdom;
 		tempSP = player.skillpoints;
 	
 	}
